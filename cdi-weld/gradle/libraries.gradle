@@ -1,0 +1,22 @@
+ext.log = [
+    simple : "org.slf4j:slf4j-simple:${slf4jVersion}",
+    log4j2: "org.apache.logging.log4j:log4j-slf4j-impl:${log4j2Version}"
+]
+
+ext.apache = [
+        commons: [
+                lang: "org.apache.commons:commons-lang3:${apacheCommonsLangVersion}",
+                text: "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
+        ]
+]
+
+ext.misc = [
+    picocli: "info.picocli:picocli:${picocliVersion}"
+]
+
+ext.cdi = [
+    api: "javax.enterprise:cdi-api:2.0",
+    weld: "org.jboss.weld.se:weld-se-shaded:3.1.4.Final"
+    
+]
+    

@@ -1,0 +1,46 @@
+/logs/
+*/?
+?/
+gradle/wrapper/
+
+######################
+# Gradle
+######################
+/.gradle/
+/build/
+
+### subrojects ###
+*/.gradle/
+*/build/
+*/out/
+*/logs/
+
+######################
+# Eclipse
+######################
+/bin/
+/.settings/
+.project
+.classpath
+*.md.html
+### subrojects ###
+*/bin/
+*/.settings/
+*/.project
+*/.classpath
+*/*.md.html
+
+######################
+# IntelliJ
+######################
+.idea/**
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+
+#####################
+# Mac OSX
+#####################
+.DS_Store

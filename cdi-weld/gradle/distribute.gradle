@@ -1,0 +1,9 @@
+apply plugin : 'application'
+
+def exclusions = {
+}
+
+distZip exclusions
+
+distTar exclusions
+

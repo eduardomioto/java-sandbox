@@ -1,0 +1,53 @@
+
+apply plugin: 'base'
+apply plugin: 'java'
+apply plugin: 'jacoco'
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+// custom tasks for creating source/javadocs jars
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled false
+        html.enabled true
+        html.destination file("${buildDir}/reports/jacoco")
+        csv.enabled false
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.75
+            }
+        }
+    }
+}
+
+codeCoverageReport.dependsOn test
+
+check.dependsOn jacocoTestCoverageVerification
+
+build.dependsOn jacocoTestReport
+
+check.dependsOn('jacocoTestReport')

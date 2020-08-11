@@ -1,0 +1,43 @@
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+// add javadoc/source jar tasks as artifacts
+artifacts {
+    archives sourcesJar//, javadocJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+
+// add nexus repository
+if(hasProperty("nexus.user") && hasProperty("nexus.pass") && project.version) {
+    publishing {
+        repositories {
+            maven {
+                credentials {
+                    username property("nexus.user")
+                    password property("nexus.pass")
+                }
+                if (project.version.toString().endsWith('-SNAPSHOT')) {
+                    url project.repositories.findByName('nexus-snapshots').url
+                } else {
+                    url project.repositories.findByName('nexus-releases').url
+                }
+            }
+        }
+    }
+}
+
+if(!hasProperty("nexus.publish.local") || property("nexus.publish.local") == 'true'){
+    tasks.assemble.dependsOn publishToMavenLocal
+}

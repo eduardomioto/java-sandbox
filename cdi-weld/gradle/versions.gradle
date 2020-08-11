@@ -1,0 +1,21 @@
+buildscript {
+    scriptHandler ->
+        scriptHandler.dependencies {
+            classpath files("gradle/config/gradle-versions-plugin-0.20.0.jar")
+        }
+}
+
+apply plugin: com.github.benmanes.gradle.versions.VersionsPlugin
+
+dependencyUpdates.resolutionStrategy {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'preview'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
+}

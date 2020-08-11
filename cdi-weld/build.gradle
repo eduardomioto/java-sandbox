@@ -1,0 +1,18 @@
+apply from: "${rootDir}/gradle/compile.gradle"
+apply from: "${rootDir}/gradle/libraries.gradle"
+apply from: "${rootDir}/gradle/repositories.gradle"
+apply from: "${rootDir}/gradle/maven.gradle"
+apply from: "${rootDir}/gradle/ide.gradle"
+group 'com.mioto'
+
+apply from: "$rootDir/gradle/versions.gradle"
+
+
+dependencies {
+    compile log.log4j2
+    compile apache.commons.lang
+    compile apache.commons.text
+    compile misc.picocli
+	compile cdi.api
+	compile cdi.weld   
+}

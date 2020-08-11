@@ -1,0 +1,10 @@
+rootProject.name = rootDir.name
+
+def toProject(name, path = null) {
+    include ":$name"
+    if (path) {
+        project(":$name").projectDir = file("$rootDir/$path/$name")
+    }
+}
+
+toProject("cdi-weld-job-example")
